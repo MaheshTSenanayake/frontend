@@ -114,6 +114,8 @@ export function MainContextProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const get_all_issues = useCallback(async () => {
+    const token = sessionStorage.getItem("accessToken");
+    
     try {
       const response = await axios.get(endpoints.user.all_issues);
       dispatch({

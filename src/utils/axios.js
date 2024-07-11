@@ -3,14 +3,32 @@ import { BASE_URL } from "../http-common";
 
 const axiosInstance = axios.create({ baseURL: BASE_URL });
 
+const getToken = () => {
+  return sessionStorage.getItem("accessToken");
+};
+
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const token = getToken();
+    if (token) {
+      config.headers["x-access-token"] = token;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 axiosInstance.interceptors.response.use(
   (res) => {
     return res;
   },
-  (error) =>
-    Promise.reject(
+  (error) => {
+    return Promise.reject(
       (error.response && error.response.data) || "Something went wrong"
-    )
+    );
+  }
 );
 
 export default axiosInstance;
