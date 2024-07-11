@@ -2,6 +2,7 @@ import React from "react";
 import { useMainContext } from "../../context/hooks/use-main-context";
 import {
   Button,
+  Chip,
   Table,
   TableBody,
   TableCell,
@@ -13,7 +14,22 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 function IssuesTable() {
-  const { issues_data } = useMainContext();
+  const { issues_data, open_delete_issue_dialog } = useMainContext();
+
+  function getSeverityColor(severity) {
+    switch (severity) {
+      case "Low":
+        return "success";
+      case "Medium":
+        return "primary";
+      case "High":
+        return "secondary";
+      case "Critical":
+        return "error";
+      default:
+        return "default";
+    }
+  }
 
   return (
     <TableContainer>
@@ -43,13 +59,23 @@ function IssuesTable() {
             issues_data?.map((issue, index) => (
               <TableRow key={index}>
                 <TableCell>{issue.title}</TableCell>
-                <TableCell>{issue.severity}</TableCell>
+                <TableCell>
+                  <Chip
+                    label={issue.severity}
+                    color={getSeverityColor(issue.severity)}
+                    variant="outlined"
+                    size="small"
+                  />
+                </TableCell>
                 <TableCell>{issue.priority}</TableCell>
                 <TableCell>{issue.status}</TableCell>
                 <TableCell>
                   <div style={{ display: "flex", gap: "8px" }}>
                     <EditIcon sx={{ color: "#24b200" }} />
-                    <DeleteIcon sx={{ color: "#ff0000" }} />
+                    <DeleteIcon
+                      onClick={()=>open_delete_issue_dialog(issue)}
+                      sx={{ color: "#ff0000" }}
+                    />
                   </div>
                 </TableCell>
                 <TableCell>
