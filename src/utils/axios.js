@@ -24,5 +24,6 @@ export const endpoints = {
     all_issues: "/issue/getissues",
     add_issue: "/issue/addissue",
     delete_issue: "/issue/deletebyid",
+    update_issue: "/issue/updatebyid",
   },
 };

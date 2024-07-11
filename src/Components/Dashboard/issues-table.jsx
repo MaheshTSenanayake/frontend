@@ -14,7 +14,12 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 function IssuesTable() {
-  const { issues_data, open_delete_issue_dialog } = useMainContext();
+  const {
+    issues_data,
+    open_delete_issue_dialog,
+    open_view_issue_dialog,
+    open_edit_issue_dialog,
+  } = useMainContext();
 
   function getSeverityColor(severity) {
     switch (severity) {
@@ -71,15 +76,22 @@ function IssuesTable() {
                 <TableCell>{issue.status}</TableCell>
                 <TableCell>
                   <div style={{ display: "flex", gap: "8px" }}>
-                    <EditIcon sx={{ color: "#24b200" }} />
+                    <EditIcon
+                      onClick={() => open_edit_issue_dialog(issue)}
+                      sx={{ color: "#24b200" }}
+                    />
                     <DeleteIcon
-                      onClick={()=>open_delete_issue_dialog(issue)}
+                      onClick={() => open_delete_issue_dialog(issue)}
                       sx={{ color: "#ff0000" }}
                     />
                   </div>
                 </TableCell>
                 <TableCell>
-                  <Button size="small" variant="outlined">
+                  <Button
+                    onClick={() => open_view_issue_dialog(issue)}
+                    size="small"
+                    variant="outlined"
+                  >
                     View
                   </Button>
                 </TableCell>
