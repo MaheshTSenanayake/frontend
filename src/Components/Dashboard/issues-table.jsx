@@ -1,5 +1,6 @@
 import React from "react";
 import { useMainContext } from "../../context/hooks/use-main-context";
+import { useAuthContext } from "../../auth/hooks/use-auth-context";
 import {
   Button,
   Chip,
@@ -21,6 +22,9 @@ function IssuesTable() {
     open_edit_issue_dialog,
   } = useMainContext();
 
+  const { user } = useAuthContext();
+  const userData = JSON.parse(user);
+
   function getSeverityColor(severity) {
     switch (severity) {
       case "Low":
@@ -30,6 +34,36 @@ function IssuesTable() {
       case "High":
         return "secondary";
       case "Critical":
+        return "error";
+      default:
+        return "default";
+    }
+  }
+
+  function getPriorityColor(priority) {
+    switch (priority) {
+      case "Low":
+        return "success";
+      case "Medium":
+        return "primary";
+      case "High":
+        return "error";
+      default:
+        return "default";
+    }
+  }
+
+  function getStatusColor(status) {
+    switch (status) {
+      case "Open":
+        return "primary";
+      case "Inprogress":
+        return "success";
+      case "Testing":
+        return "secondary";
+      case "Resolved":
+        return "warning";
+      case "Closed":
         return "error";
       default:
         return "default";
@@ -51,7 +85,7 @@ function IssuesTable() {
             <TableCell>Severity</TableCell>
             <TableCell>Priority</TableCell>
             <TableCell>Status</TableCell>
-            <TableCell>Action</TableCell>
+            {userData.role !== "user" && <TableCell>Action</TableCell>}
             <TableCell></TableCell>
           </TableRow>
         </TableHead>
@@ -72,20 +106,36 @@ function IssuesTable() {
                     size="small"
                   />
                 </TableCell>
-                <TableCell>{issue.priority}</TableCell>
-                <TableCell>{issue.status}</TableCell>
                 <TableCell>
-                  <div style={{ display: "flex", gap: "8px" }}>
-                    <EditIcon
-                      onClick={() => open_edit_issue_dialog(issue)}
-                      sx={{ color: "#24b200" }}
-                    />
-                    <DeleteIcon
-                      onClick={() => open_delete_issue_dialog(issue)}
-                      sx={{ color: "#ff0000" }}
-                    />
-                  </div>
+                  <Chip
+                    label={issue.priority}
+                    color={getPriorityColor(issue.priority)}
+                    variant="outlined"
+                    size="small"
+                  />
                 </TableCell>
+                <TableCell>
+                  <Chip
+                    label={issue.status}
+                    color={getStatusColor(issue.status)}
+                    variant="outlined"
+                    size="small"
+                  />
+                </TableCell>
+                {userData.role !== "user" && (
+                  <TableCell>
+                    <div style={{ display: "flex", gap: "8px" }}>
+                      <EditIcon
+                        onClick={() => open_edit_issue_dialog(issue)}
+                        sx={{ color: "#24b200" }}
+                      />
+                      <DeleteIcon
+                        onClick={() => open_delete_issue_dialog(issue)}
+                        sx={{ color: "#ff0000" }}
+                      />
+                    </div>
+                  </TableCell>
+                )}
                 <TableCell>
                   <Button
                     onClick={() => open_view_issue_dialog(issue)}

@@ -11,6 +11,7 @@ import EditIssue from "../edit-issue";
 
 function DashboardView() {
   const { get_all_issues, add_new_issue_open } = useMainContext();
+
   useEffect(() => {
     get_all_issues();
   }, [get_all_issues]);
