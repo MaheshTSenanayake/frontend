@@ -103,6 +103,7 @@ const reducer = (state, action) => {
       ...state,
       edit_issue_open_state: false,
       issue_to_be_edit: {},
+      issues_data: action.payload,
     };
   }
 

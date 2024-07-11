@@ -90,7 +90,7 @@ function EditIssue() {
               name="title"
               label="Title"
               variant="standard"
-              value={formData.title}
+              value={formData?.title}
               onChange={handleChange}
             />
             <TextField
@@ -99,7 +99,7 @@ function EditIssue() {
               variant="standard"
               multiline
               rows={4}
-              value={formData.description}
+              value={formData?.description}
               onChange={handleChange}
             />
           </Box>
@@ -117,7 +117,7 @@ function EditIssue() {
               select
               label="Severity"
               variant="standard"
-              value={formData.severity}
+              value={formData?.severity}
               onChange={handleChange}
               helperText="Severity (Optional)"
             >
@@ -132,7 +132,7 @@ function EditIssue() {
               select
               label="Priority"
               variant="standard"
-              value={formData.priority}
+              value={formData?.priority}
               onChange={handleChange}
               helperText="Priority (Optional)"
             >
@@ -147,7 +147,7 @@ function EditIssue() {
               select
               label="Status"
               variant="standard"
-              value={formData.status}
+              value={formData?.status}
               onChange={handleChange}
             >
               {statusOptions.map((option) => (
