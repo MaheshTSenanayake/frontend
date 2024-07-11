@@ -8,23 +8,26 @@ import AuthGuard from "./auth/guard/auth-guard";
 import LoginPage from "./Pages/LoginPage";
 import Dashboard from "./Pages/Dashboard";
 import { MainContextProvider } from "./context/main-context-provider";
+import NavigationLayout from "./Components/Layouts/NavigationLayout";
 
 function App() {
   return (
     <AuthProvider>
-      <Routes>
-        <Route exact path="/" element={<LoginPage />}></Route>
-        <Route
-          path="/dashboard"
-          element={
-            <MainContextProvider>
-              <AuthGuard>
-                <Dashboard />
-              </AuthGuard>
-            </MainContextProvider>
-          }
-        ></Route>
-      </Routes>
+      <NavigationLayout>
+        <Routes>
+          <Route exact path="/" element={<LoginPage />}></Route>
+          <Route
+            path="/dashboard"
+            element={
+              <MainContextProvider>
+                <AuthGuard>
+                  <Dashboard />
+                </AuthGuard>
+              </MainContextProvider>
+            }
+          ></Route>
+        </Routes>
+      </NavigationLayout>
     </AuthProvider>
   );
 }

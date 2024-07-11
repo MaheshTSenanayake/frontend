@@ -10,6 +10,7 @@ import {
   TableRow,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 function IssuesTable() {
   const { issues_data } = useMainContext();
@@ -46,10 +47,10 @@ function IssuesTable() {
                 <TableCell>{issue.priority}</TableCell>
                 <TableCell>{issue.status}</TableCell>
                 <TableCell>
-                  <EditIcon
-                    
-                    sx={{ color: "#24b200" }}
-                  />
+                  <div style={{ display: "flex", gap: "8px" }}>
+                    <EditIcon sx={{ color: "#24b200" }} />
+                    <DeleteIcon sx={{ color: "#ff0000" }} />
+                  </div>
                 </TableCell>
                 <TableCell>
                   <Button size="small" variant="outlined">
