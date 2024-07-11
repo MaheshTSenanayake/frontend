@@ -7,6 +7,7 @@ import AuthGuard from "./auth/guard/auth-guard";
 
 import LoginPage from "./Pages/LoginPage";
 import Dashboard from "./Pages/Dashboard";
+import { MainContextProvider } from "./context/main-context-provider";
 
 function App() {
   return (
@@ -16,9 +17,11 @@ function App() {
         <Route
           path="/dashboard"
           element={
-            <AuthGuard>
-              <Dashboard />
-            </AuthGuard>
+            <MainContextProvider>
+              <AuthGuard>
+                <Dashboard />
+              </AuthGuard>
+            </MainContextProvider>
           }
         ></Route>
       </Routes>

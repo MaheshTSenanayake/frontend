@@ -1,9 +1,10 @@
 import React from "react";
+import DashboardView from "../Components/Dashboard/view/dashboard-view";
 
 function Dashboard() {
   return (
-    <div>
-      <h1 style={{ color: "#ff0000" }}>Dashboard</h1>
+    <div style={{ marginTop: "20px" }}>
+      <DashboardView />
     </div>
   );
 }

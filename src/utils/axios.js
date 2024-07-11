@@ -20,9 +20,7 @@ export const endpoints = {
     user_auth: "/auth/signin",
     register_user: "/auth/signup",
   },
-  /* user: {
-    get_all_charts: "everything",
-    delete_everything: "/everything",
-    update_everything: "/everything",
-  }, */
+   user: {
+    all_issues: "/issue/getissues",
+  },
 };
