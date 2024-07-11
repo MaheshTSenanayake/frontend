@@ -6,6 +6,8 @@ import IssuesTable from "../issues-table";
 import AddIcon from "@mui/icons-material/Add";
 import AddNewIssue from "../add-new-issue";
 import DeleteIssue from "../delete-issue";
+import ViewIssue from "../view-issue";
+import EditIssue from "../edit-issue";
 
 function DashboardView() {
   const { get_all_issues, add_new_issue_open } = useMainContext();
@@ -17,6 +19,8 @@ function DashboardView() {
       <Paper sx={{ width: "80%", padding: 2 }}>
         <AddNewIssue />
         <DeleteIssue />
+        <ViewIssue />
+        <EditIssue />
         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Button
             onClick={() => add_new_issue_open()}

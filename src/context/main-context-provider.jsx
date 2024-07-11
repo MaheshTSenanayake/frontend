@@ -7,7 +7,11 @@ const initialState = {
   issues_data: [],
   add_new_issue_open_state: false,
   delete_issue_open_state: false,
+  view_issue_open_state: false,
+  edit_issue_open_state: false,
   issue_to_be_deleted: {},
+  issue_to_be_view: {},
+  issue_to_be_edit: {},
 };
 
 const reducer = (state, action) => {
@@ -59,6 +63,46 @@ const reducer = (state, action) => {
     return {
       ...state,
       issues_data: action.payload,
+    };
+  }
+
+  if (action.type === "OPEN_VIEW_ISSUE") {
+    return {
+      ...state,
+      issue_to_be_view: action.payload,
+      view_issue_open_state: true,
+    };
+  }
+
+  if (action.type === "CLOSE_VIEW_ISSUE") {
+    return {
+      ...state,
+      issue_to_be_view: {},
+      view_issue_open_state: false,
+    };
+  }
+
+  if (action.type === "OPEN_EDIT_ISSUE") {
+    return {
+      ...state,
+      edit_issue_open_state: true,
+      issue_to_be_edit: action.payload,
+    };
+  }
+
+  if (action.type === "CLOSE_EDIT_ISSUE") {
+    return {
+      ...state,
+      edit_issue_open_state: false,
+      issue_to_be_edit: {},
+    };
+  }
+
+  if (action.type === "UPDATE_ISSUE") {
+    return {
+      ...state,
+      edit_issue_open_state: false,
+      issue_to_be_edit: {},
     };
   }
 
@@ -131,6 +175,47 @@ export function MainContextProvider({ children }) {
     }
   }, []);
 
+  const open_view_issue_dialog = useCallback((issue_to_be_view) => {
+    dispatch({
+      type: "OPEN_VIEW_ISSUE",
+      payload: issue_to_be_view,
+    });
+  }, []);
+
+  const close_view_issue_dialog = useCallback(() => {
+    dispatch({
+      type: "CLOSE_VIEW_ISSUE",
+    });
+  }, []);
+
+  const open_edit_issue_dialog = useCallback((issue_to_be_edit) => {
+    dispatch({
+      type: "OPEN_EDIT_ISSUE",
+      payload: issue_to_be_edit,
+    });
+  }, []);
+
+  const close_edit_issue_dialog = useCallback(() => {
+    dispatch({
+      type: "CLOSE_EDIT_ISSUE",
+    });
+  }, []);
+
+  const update_issue = useCallback(async (id, issueData) => {
+    try {
+      const response = await axios.put(
+        `${endpoints.user.update_issue}/${id}`,
+        issueData
+      );
+      dispatch({
+        type: "UPDATE_ISSUE",
+        payload: response.data.issues,
+      });
+    } catch (error) {
+      console.error("Failed to update issues:", error);
+    }
+  }, []);
+
   const memoizedValue = useMemo(
     () => ({
       get_all_issues,
@@ -140,11 +225,20 @@ export function MainContextProvider({ children }) {
       open_delete_issue_dialog,
       close_delete_issue_dialog,
       delete_issue,
+      open_view_issue_dialog,
+      close_view_issue_dialog,
+      open_edit_issue_dialog,
+      close_edit_issue_dialog,
+      update_issue,
 
       issues_data: state.issues_data,
       add_new_issue_open_state: state.add_new_issue_open_state,
       delete_issue_open_state: state.delete_issue_open_state,
       issue_to_be_deleted: state.issue_to_be_deleted,
+      issue_to_be_view: state.issue_to_be_view,
+      view_issue_open_state: state.view_issue_open_state,
+      issue_to_be_edit: state.issue_to_be_edit,
+      edit_issue_open_state: state.edit_issue_open_state,
     }),
     [
       get_all_issues,
@@ -154,11 +248,20 @@ export function MainContextProvider({ children }) {
       open_delete_issue_dialog,
       close_delete_issue_dialog,
       delete_issue,
+      open_view_issue_dialog,
+      close_view_issue_dialog,
+      open_edit_issue_dialog,
+      close_edit_issue_dialog,
+      update_issue,
 
       state.issues_data,
       state.add_new_issue_open_state,
       state.delete_issue_open_state,
       state.issue_to_be_deleted,
+      state.issue_to_be_view,
+      state.view_issue_open_state,
+      state.issue_to_be_edit,
+      state.edit_issue_open_state,
     ]
   );
 
