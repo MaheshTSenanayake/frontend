@@ -1,10 +1,28 @@
+import { Route, Routes } from "react-router";
+
 import "./App.css";
+
+import { AuthProvider } from "./auth/auth-provider";
+import AuthGuard from "./auth/guard/auth-guard";
+
+import LoginPage from "./Pages/LoginPage";
+import Dashboard from "./Pages/Dashboard";
 
 function App() {
   return (
-    <div>
-      <h1>Track Issue</h1>
-    </div>
+    <AuthProvider>
+      <Routes>
+        <Route exact path="/" element={<LoginPage />}></Route>
+        <Route
+          path="/dashboard"
+          element={
+            <AuthGuard>
+              <Dashboard />
+            </AuthGuard>
+          }
+        ></Route>
+      </Routes>
+    </AuthProvider>
   );
 }
 

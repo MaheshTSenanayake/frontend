@@ -74,9 +74,9 @@ export function AuthProvider({ children }) {
   // User Login
   const user_login = useCallback(async (data) => {
     const response = await axios.post(endpoints.auth.user_auth, data);
-    const { token, userData } = response.data;
+    const { accessToken, userData } = response.data;
 
-    setSession(token, JSON.stringify(userData));
+    setSession(accessToken.accessToken, JSON.stringify(userData));
 
     dispatch({
       type: "LOGIN",
