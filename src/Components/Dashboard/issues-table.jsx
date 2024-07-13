@@ -23,7 +23,7 @@ function IssuesTable() {
   } = useMainContext();
 
   const { user } = useAuthContext();
-  const userData = JSON.parse(user);
+  const userData = user;
 
   function getSeverityColor(severity) {
     switch (severity) {
