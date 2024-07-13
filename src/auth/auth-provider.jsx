@@ -41,10 +41,10 @@ export function AuthProvider({ children }) {
   const initialize = useCallback(async () => {
     try {
       const accessToken = sessionStorage.getItem("accessToken");
-      const user = sessionStorage.getItem("userData");
+      const user = JSON.parse(sessionStorage.getItem("userData"));
 
       if (accessToken) {
-        setSession(accessToken, user);
+        setSession(accessToken, JSON.stringify(user));
 
         dispatch({
           type: "INITIAL",
